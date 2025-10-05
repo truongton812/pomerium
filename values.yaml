@@ -1,0 +1,41 @@
+replicaCount: 1
+
+image:
+  repository: pomerium/pomerium
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 10443
+
+pomeriumConfig: |-
+    authenticate_service_url: https://authenticate.pomerium.app
+
+    signing_key_file: '/pomerium/ec_private.pem'
+    routes:
+      - from: https://shopnow-pomerium.tuna-devops.site
+        to: https://google.com
+        pass_identity_headers: true
+        policy:
+          - allow:
+              or:
+                - email:
+                    is: lmtuan2906@gmail.com
+
+pomeriumSigningKey: |-
+  -----BEGIN EC PRIVATE KEY-----
+  MHcCAQEEILdAosLP5j9gT/FaHPwV5D/xT7ljs4LzzpYd/dUB2sYFoAoGCCqGSM49
+  AwEHoUQDQgAE+kSA2GqW73qlFurWSfL3RhSOtIhyREGnfeAi1jghW697CVf3b2QY
+  nYxTcJLJ6RYKwVgjGQISrwsvpgkZM4KeWQ==
+  -----END EC PRIVATE KEY-----
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: shopnow-pomerium.tuna-devops.site
+      paths:
+        - path: /
+          pathType: Prefix
+

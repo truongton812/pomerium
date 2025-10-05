@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "pomerium.fullname" . }}
+  labels:
+    {{- include "pomerium.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 443
+      protocol: TCP
+  selector:
+    {{- include "pomerium.selectorLabels" . | nindent 4 }}
