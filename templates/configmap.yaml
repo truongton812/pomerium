@@ -5,8 +5,9 @@ data:
 kind: ConfigMap
 metadata:
   name: pomerium-config
-  namespace: pomerium
-  name: {{ include "pomerium.fullname" . }}-configmap
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "pomerium.labels" . | nindent 4 }}
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
 

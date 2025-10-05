@@ -34,7 +34,7 @@ ingress:
   enabled: true
   className: nginx
   hosts:
-    - host: shopnow-pomerium.tuna-devops.site
+    - host: shopnow-pomerium-test.tuna-devops.site
       paths:
         - path: /
           pathType: Prefix
